@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Lista de Huéspedes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>👤 Gestión de Huéspedes</h2>
+
+        <a th:href="@{/huespedes/nuevo}" class="btn btn-success">
+
+            Nuevo Huésped
+
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-primary">
+
+        <tr>
+
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>DNI</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="h : ${huespedes}">
+
+            <td th:text="${h.id}"></td>
+            <td th:text="${h.nombres}"></td>
+            <td th:text="${h.apellidos}"></td>
+            <td th:text="${h.dni}"></td>
+            <td th:text="${h.telefono}"></td>
+            <td th:text="${h.correo}"></td>
+            <td th:text="${h.direccion}"></td>
+
+            <td>
+
+                <a th:href="@{'/huespedes/editar/' + ${h.id}}" class="btn btn-warning btn-sm">
+
+                    Editar
+
+                </a>
+
+                <a th:href="@{'/huespedes/eliminar/' + ${h.id}}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Eliminar huésped?')">
+
+                    Eliminar
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

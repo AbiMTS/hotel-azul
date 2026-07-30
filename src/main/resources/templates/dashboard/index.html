@@ -1,15 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+
+    <title>Hotel Azul - Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
 </head>
 
-<body>
+<body class="bg-light">
 
-<h1>Bienvenido a Hotel Azul</h1>
+<nav class="navbar navbar-dark bg-primary">
 
-<p>El sistema ya está funcionando.</p>
+    <div class="container-fluid">
+
+        <span class="navbar-brand mb-0 h1">
+
+            🏨 HOTEL AZUL
+
+        </span>
+
+        <span class="text-white">
+
+            Bienvenido Administrador
+
+        </span>
+
+    </div>
+
+</nav>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-md-2 bg-dark min-vh-100 p-3">
+
+            <h5 class="text-white">
+
+                MENÚ
+
+            </h5>
+
+            <hr class="text-white">
+
+            <div class="list-group">
+
+                <a href="/dashboard" class="list-group-item list-group-item-action">
+
+                    🏠 Dashboard
+
+                </a>
+
+                <a href="/habitaciones" class="list-group-item list-group-item-action">
+
+                    🛏 Habitaciones
+
+                </a>
+
+                <a href="/huespedes" class="list-group-item list-group-item-action">
+
+                    👤 Huéspedes
+
+                </a>
+
+                <a href="/reservas" class="list-group-item list-group-item-action">
+
+                    📅 Reservas
+
+                </a>
+
+                <a href="/pagos" class="list-group-item list-group-item-action">
+
+                    💳 Pagos
+
+                </a>
+
+                <a href="/usuarios" class="list-group-item list-group-item-action">
+
+                    👥 Usuarios
+
+                </a>
+
+                <a href="/logout" class="list-group-item list-group-item-action text-danger">
+
+                    🚪 Cerrar sesión
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-10 p-4">
+
+            <h2>
+
+                Dashboard
+
+            </h2>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <div class="card text-bg-primary mb-3">
+
+                        <div class="card-body">
+
+                            <h5>Habitaciones</h5>
+
+                            <h2>15</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card text-bg-success mb-3">
+
+                        <div class="card-body">
+
+                            <h5>Huéspedes</h5>
+
+                            <h2>28</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card text-bg-warning mb-3">
+
+                        <div class="card-body">
+
+                            <h5>Reservas</h5>
+
+                            <h2>9</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="card text-bg-danger mb-3">
+
+                        <div class="card-body">
+
+                            <h5>Pagos</h5>
+
+                            <h2>12</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    Bienvenido
+
+                </div>
+
+                <div class="card-body">
+
+                    Este será el panel principal del Sistema Hotel Azul.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
