@@ -1,10 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+
+    <meta charset="UTF-8">
+
+    <title>Nueva Reserva</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
-<body>
-$END$
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Nueva Reserva</h3>
+
+        </div>
+
+        <div class="card-body">
+            <div th:if="${error}" class="alert alert-danger">
+
+                <span th:text="${error}"></span>
+
+            </div>
+            <form th:action="@{/reservas/guardar}"
+                  th:object="${reserva}"
+                  method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">Huésped</label>
+
+                    <select class="form-select"
+                            th:field="*{huesped.id}">
+
+                        <option value="">Seleccione un huésped</option>
+
+                        <option th:each="h : ${huespedes}"
+                                th:value="${h.id}"
+                                th:text="${h.nombres + ' ' + h.apellidos}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Habitación</label>
+
+                    <select class="form-select"
+                            th:field="*{habitacion.id}">
+
+                        <option value="">Seleccione una habitación</option>
+
+                        <option th:each="hab : ${habitaciones}"
+                                th:value="${hab.id}"
+                                th:text="${hab.numero}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Fecha de Entrada</label>
+
+                    <input type="date"
+                           class="form-control"
+                           th:field="*{fechaEntrada}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Fecha de Salida</label>
+
+                    <input type="date"
+                           class="form-control"
+                           th:field="*{fechaSalida}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Total</label>
+
+                    <input type="number"
+                           step="0.01"
+                           class="form-control"
+                           th:field="*{total}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Estado</label>
+
+                    <select class="form-select"
+                            th:field="*{estado}">
+
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Cancelada">Cancelada</option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    Guardar
+
+                </button>
+
+                <a th:href="@{/reservas}"
+                   class="btn btn-secondary">
+
+                    Cancelar
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
+
 </html>

@@ -87,11 +87,17 @@
 
                 </a>
 
-                <a href="/logout" class="list-group-item list-group-item-action text-danger">
+                <form th:action="@{/logout}" method="post">
 
-                    🚪 Cerrar sesión
+                    <button type="submit"
+                            class="list-group-item list-group-item-action text-danger border-0 bg-transparent text-start w-100"
+                            onclick="return confirm('¿Desea cerrar sesión?')">
 
-                </a>
+                        🚪 Cerrar sesión
+
+                    </button>
+
+                </form>
 
             </div>
 
