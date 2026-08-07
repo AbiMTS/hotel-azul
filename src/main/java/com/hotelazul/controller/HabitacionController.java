@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class HabitacionController {
-
-
     @Autowired
     private HabitacionService habitacionService;
 
@@ -20,13 +18,19 @@ public class HabitacionController {
     private TipoHabitacionService tipoHabitacionService;
 
     @GetMapping("/habitaciones")
-    public String listarHabitaciones(Model model) {
-
-        model.addAttribute("habitaciones", habitacionService.listar());
-
+    public String listarHabitaciones(
+            @RequestParam(required = false) String buscar,
+            Model model) {
+        if (buscar != null && !buscar.isBlank()) {
+            model.addAttribute("habitaciones",
+                    habitacionService.buscarPorNumero(buscar));
+        } else {
+            model.addAttribute("habitaciones",
+                    habitacionService.listar());
+        }
+        model.addAttribute("buscar", buscar);
         return "habitaciones/lista";
     }
-
     @GetMapping("/habitaciones/nueva")
     public String nuevaHabitacion(Model model) {
 
@@ -37,12 +41,9 @@ public class HabitacionController {
 
         return "habitaciones/nuevaHabitacion";
     }
-
-
     @PostMapping("/habitaciones/guardar")
     public String guardarHabitacion(@ModelAttribute Habitacion habitacion,
                                     org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
-
         habitacionService.guardar(habitacion);
 
         redirectAttributes.addFlashAttribute("mensaje",
@@ -50,23 +51,17 @@ public class HabitacionController {
 
         return "redirect:/habitaciones";
     }
-
     @GetMapping("/habitaciones/editar/{id}")
     public String editarHabitacion(@PathVariable Long id, Model model) {
-
         Habitacion habitacion = habitacionService.buscarPorId(id).orElseThrow();
-
         model.addAttribute("habitacion", habitacion);
         model.addAttribute("tiposHabitacion", tipoHabitacionService.listar());
-
         return "habitaciones/editarHabitacion";
     }
 
     @GetMapping("/habitaciones/eliminar/{id}")
     public RedirectView eliminarHabitacion(@PathVariable Long id) {
-
         habitacionService.eliminar(id);
-
         return new RedirectView("/habitaciones");
     }
 }

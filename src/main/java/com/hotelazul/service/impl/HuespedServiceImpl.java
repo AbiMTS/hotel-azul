@@ -16,6 +16,8 @@ public class HuespedServiceImpl implements HuespedService{
 
     @Override
     public List<Huesped> listar() {
+
+
         return repository.findAll();
     }
 
@@ -33,4 +35,18 @@ public class HuespedServiceImpl implements HuespedService{
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<Huesped> buscar(String texto) {
+        List<Huesped> lista = repository.findByDniContaining(texto);
+        if (!lista.isEmpty()) {
+            return lista;
+        }
+        lista = repository.findByNombresContainingIgnoreCase(texto);
+        if (!lista.isEmpty()) {
+            return lista;
+        }
+        return repository.findByApellidosContainingIgnoreCase(texto);
+    }
+
 }

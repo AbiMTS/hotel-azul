@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HuespedController {
@@ -14,10 +15,17 @@ public class HuespedController {
     private HuespedService huespedService;
 
     @GetMapping("/huespedes")
-    public String listarHuespedes(Model model){
-
-        model.addAttribute("huespedes", huespedService.listar());
-
+    public String listarHuespedes(
+            @RequestParam(required = false) String buscar,
+            Model model) {
+        if (buscar != null && !buscar.isBlank()) {
+            model.addAttribute("huespedes",
+                    huespedService.buscar(buscar));
+        } else {
+            model.addAttribute("huespedes",
+                    huespedService.listar());
+        }
+        model.addAttribute("buscar", buscar);
         return "huespedes/listaHuespedes";
     }
 

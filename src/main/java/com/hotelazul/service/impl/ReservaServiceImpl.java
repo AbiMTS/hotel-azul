@@ -32,5 +32,13 @@ public class ReservaServiceImpl implements ReservaService {
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
-
+    @Override
+    public List<Reserva> buscar(String texto) {
+        List<Reserva> lista =
+                repository.findByHuesped_NombresContainingIgnoreCase(texto);
+        if (!lista.isEmpty()) {
+            return lista;
+        }
+        return repository.findByHabitacion_NumeroContainingIgnoreCase(texto);
+    }
 }

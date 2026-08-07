@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ReservaController {
@@ -22,10 +23,17 @@ public class ReservaController {
     private HabitacionService habitacionService;
 
     @GetMapping("/reservas")
-    public String listarReservas(Model model) {
-
-        model.addAttribute("reservas", reservaService.listar());
-
+    public String listarReservas(
+            @RequestParam(required = false) String buscar,
+            Model model) {
+        if (buscar != null && !buscar.isBlank()) {
+            model.addAttribute("reservas",
+                    reservaService.buscar(buscar));
+        } else {
+            model.addAttribute("reservas",
+                    reservaService.listar());
+        }
+        model.addAttribute("buscar", buscar);
         return "reservas/listaReservas";
     }
 

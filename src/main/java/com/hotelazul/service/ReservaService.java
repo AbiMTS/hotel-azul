@@ -13,4 +13,6 @@ public interface ReservaService {
     Reserva guardar(Reserva reserva);
 
     void eliminar(Long id);
+
+    List<Reserva> buscar(String texto);
 }

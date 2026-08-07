@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 
 @Controller
@@ -20,9 +20,18 @@ public class PagoController {
     private ReservaService reservaService;
 
     @GetMapping("/pagos")
-    public String listarPagos(Model model){
+    public String listarPagos(
+            @RequestParam(required = false) String buscar,
+            Model model) {
+        if (buscar != null && !buscar.isBlank()) {
+            model.addAttribute("pagos",
+                    pagoService.buscar(buscar));
+        } else {
+            model.addAttribute("pagos",
+                    pagoService.listar());
+        }
 
-        model.addAttribute("pagos", pagoService.listar());
+        model.addAttribute("buscar", buscar);
 
         return "pagos/listaPagos";
     }

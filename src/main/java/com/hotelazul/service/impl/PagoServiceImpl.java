@@ -18,7 +18,20 @@ public class PagoServiceImpl implements PagoService {
     public List<Pago> listar() {
         return repository.findAll();
     }
-
+    @Override
+    public List<Pago> buscar(String texto) {
+        List<Pago> lista =
+                repository.findByMetodoPagoContainingIgnoreCase(texto);
+        if (!lista.isEmpty()) {
+            return lista;
+        }
+        try {
+            Long id = Long.parseLong(texto);
+            return repository.findByReserva_Id(id);
+        } catch (NumberFormatException e) {
+            return lista;
+        }
+    }
     @Override
     public Optional<Pago> buscarPorId(Long id) {
         return repository.findById(id);

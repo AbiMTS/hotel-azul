@@ -6,13 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 @Configuration
 public class SecurityConfig {
+
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
@@ -39,8 +40,21 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
 
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+
                         .requestMatchers("/login").permitAll()
+
+                        // Solo Administrador
+                        .requestMatchers("/usuarios/**").hasRole("Administrador")
+                        .requestMatchers("/habitaciones/**").hasRole("Administrador")
+
+                        // Administrador y Recepcionista
+                        .requestMatchers("/huespedes/**").hasAnyRole("Administrador", "Recepcionista")
+                        .requestMatchers("/reservas/**").hasAnyRole("Administrador", "Recepcionista")
+                        .requestMatchers("/pagos/**").hasAnyRole("Administrador", "Recepcionista")
+                        .requestMatchers("/dashboard").hasAnyRole("Administrador", "Recepcionista")
+
                         .anyRequest().authenticated()
                 )
 
@@ -58,8 +72,14 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
+                )
+
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/403")
                 );
 
+
         return http.build();
+
     }
 }

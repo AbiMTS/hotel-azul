@@ -48,7 +48,41 @@
         </div>
 
     </div>
+    <form th:action="@{/huespedes}"
+          method="get"
+          class="row mb-4">
 
+        <div class="col-md-6">
+
+            <input type="text"
+                   name="buscar"
+                   th:value="${buscar}"
+                   class="form-control"
+                   placeholder="Buscar por DNI, nombre o apellido">
+
+        </div>
+
+        <div class="col-md-3">
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="bi bi-search"></i>
+
+                Buscar
+
+            </button>
+
+            <a th:href="@{/huespedes}"
+               class="btn btn-secondary">
+
+                Limpiar
+
+            </a>
+
+        </div>
+
+    </form>
     <table class="table table-bordered table-hover shadow">
 
         <thead class="table-primary">

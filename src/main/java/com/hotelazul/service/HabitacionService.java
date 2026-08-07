@@ -12,4 +12,7 @@ public interface HabitacionService {
     Habitacion guardar(Habitacion habitacion);
 
     void eliminar(Long id);
+
+    List<Habitacion> buscarPorNumero(String numero);
+
 }

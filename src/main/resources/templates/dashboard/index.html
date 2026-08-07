@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
@@ -13,7 +15,7 @@
 
 </head>
 
-<body class="bg-light">
+<body>
 
 <nav class="navbar navbar-dark bg-primary">
 
@@ -25,37 +27,37 @@
 
         </span>
 
-        <span class="text-white">
-
-            Bienvenido Administrador
-
-        </span>
+        <div class="text-white text-end">
+            <strong th:text="${usuario.nombres + ' ' + usuario.apellidos}"></strong>
+            <br>
+            <small th:text="${usuario.rol.nombre}"></small>
+        </div>
 
     </div>
 
 </nav>
 
-<div class="container-fluid">
+<div class="row">
 
-    <div class="row">
+    <div class="col-md-2 bg-dark min-vh-100 p-3">
 
-        <div class="col-md-2 bg-dark min-vh-100 p-3">
+        <h5 class="text-white">
 
-            <h5 class="text-white">
+            MENÚ
 
-                MENÚ
+        </h5>
 
-            </h5>
+        <hr class="text-white">
 
-            <hr class="text-white">
+        <div class="list-group">
 
-            <div class="list-group">
+            <a href="/dashboard" class="list-group-item list-group-item-action">
 
-                <a href="/dashboard" class="list-group-item list-group-item-action">
+                🏠 Dashboard
 
-                    🏠 Dashboard
+            </a>
 
-                </a>
+            <div sec:authorize="hasRole('Administrador')">
 
                 <a href="/habitaciones" class="list-group-item list-group-item-action">
 
@@ -63,23 +65,26 @@
 
                 </a>
 
-                <a href="/huespedes" class="list-group-item list-group-item-action">
+            </div>
 
-                    👤 Huéspedes
+            <a href="/huespedes" class="list-group-item list-group-item-action">
 
-                </a>
+                👤 Huéspedes
 
-                <a href="/reservas" class="list-group-item list-group-item-action">
+            </a>
+            <a href="/reservas" class="list-group-item list-group-item-action">
 
-                    📅 Reservas
+                📅 Reservas
 
-                </a>
+            </a>
 
-                <a href="/pagos" class="list-group-item list-group-item-action">
+            <a href="/pagos" class="list-group-item list-group-item-action">
 
-                    💳 Pagos
+                💳 Pagos
 
-                </a>
+            </a>
+
+            <div sec:authorize="hasRole('Administrador')">
 
                 <a href="/usuarios" class="list-group-item list-group-item-action">
 
@@ -87,113 +92,156 @@
 
                 </a>
 
-                <form th:action="@{/logout}" method="post">
+            </div>
+            <form th:action="@{/logout}" method="post">
 
-                    <button type="submit"
-                            class="list-group-item list-group-item-action text-danger border-0 bg-transparent text-start w-100"
-                            onclick="return confirm('¿Desea cerrar sesión?')">
+                <button type="submit"
+                        class="list-group-item list-group-item-action text-danger border-0 bg-transparent text-start w-100"
+                        onclick="return confirm('¿Desea cerrar sesión?')">
+                    🚪 Cerrar sesión
+                </button>
+            </form>
 
-                        🚪 Cerrar sesión
+        </div>
 
-                    </button>
+    </div>
 
-                </form>
+    <div class="col-md-10 p-4">
+
+        <h2>Dashboard</h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3" sec:authorize="hasRole('Administrador')">
+
+                <div class="card text-bg-primary shadow">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-door-open-fill fs-1"></i>
+
+                        <h5 class="mt-2">Habitaciones</h5>
+
+                        <h2 th:text="${totalHabitaciones}"></h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <div class="card text-bg-success shadow">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-people-fill fs-1"></i>
+
+                        <h5 class="mt-2">Huéspedes</h5>
+
+                        <h2 th:text="${totalHuespedes}"></h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <div class="card text-bg-warning shadow">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-calendar-check-fill fs-1"></i>
+
+                        <h5 class="mt-2">Reservas</h5>
+
+                        <h2 th:text="${totalReservas}"></h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <div class="card text-bg-danger shadow">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-cash-coin fs-1"></i>
+
+                        <h5 class="mt-2">Pagos</h5>
+
+                        <h2 th:text="${totalPagos}"></h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3" sec:authorize="hasRole('Administrador')">
+
+                <div class="card text-bg-dark shadow">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-person-badge-fill fs-1"></i>
+
+                        <h5 class="mt-2">Usuarios</h5>
+
+                        <h2 th:text="${totalUsuarios}"></h2>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-        <div class="col-md-10 p-4">
+        <div class="card shadow">
 
-            <h2>
+            <div class="card-header">
 
-                Dashboard
-
-            </h2>
-
-            <hr>
-
-            <div class="row">
-
-                <div class="col-md-3">
-
-                    <div class="card text-bg-primary mb-3">
-
-                        <div class="card-body">
-
-                            <h5>Habitaciones</h5>
-
-                            <h2>15</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="card text-bg-success mb-3">
-
-                        <div class="card-body">
-
-                            <h5>Huéspedes</h5>
-
-                            <h2>28</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="card text-bg-warning mb-3">
-
-                        <div class="card-body">
-
-                            <h5>Reservas</h5>
-
-                            <h2>9</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="card text-bg-danger mb-3">
-
-                        <div class="card-body">
-
-                            <h5>Pagos</h5>
-
-                            <h2>12</h2>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                Panel Principal
 
             </div>
 
-            <div class="card">
+            <div class="card-body">
 
-                <div class="card-header">
+                <h5>Bienvenido al Sistema Hotel Azul</h5>
 
-                    Bienvenido
+                <p>
 
-                </div>
+                    Desde este panel podrá administrar habitaciones, huéspedes,
+                    reservas, pagos y usuarios según los permisos de su rol.
 
-                <div class="card-body">
+                </p>
 
-                    Este será el panel principal del Sistema Hotel Azul.
+            </div>
 
-                </div>
+        </div>
+
+    </div>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                Bienvenido
+
+            </div>
+
+            <div class="card-body">
+
+                Este será el panel principal del Sistema Hotel Azul.
 
             </div>
 

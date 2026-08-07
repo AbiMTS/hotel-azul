@@ -33,5 +33,12 @@ public class HabitacionServiceImpl implements HabitacionService {
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
+    @Override
+    public List<Habitacion> buscarPorNumero(String numero) {
+
+        return repository.findByNumeroContainingIgnoreCase(numero);
+
+    }
+
 }
 

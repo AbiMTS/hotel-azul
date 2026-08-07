@@ -12,4 +12,5 @@ public interface  PagoService {
     Pago guardar(Pago pago);
 
     void eliminar(Long id);
+    List<Pago> buscar(String texto);
 }

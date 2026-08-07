@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -37,5 +38,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void eliminar(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Usuario> buscar(String texto) {
+
+        List<Usuario> lista =
+                usuarioRepository.findByNombresContainingIgnoreCase(texto);
+
+        if (!lista.isEmpty()) {
+            return lista;
+        }
+
+        return usuarioRepository.findByCorreoContainingIgnoreCase(texto);
     }
 }
